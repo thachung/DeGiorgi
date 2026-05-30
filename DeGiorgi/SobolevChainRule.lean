@@ -149,7 +149,7 @@ private theorem integral_mul_tendsto_of_eLpNorm_tendsto
   -- ∫ (f_n - g) * ψ → 0
   have h_diff_integral : Tendsto (fun n => ∫ x, (f n x - g x) * ψ x ∂μ) atTop (nhds 0) := by
     rw [show (0 : ℝ) = ∫ _, (0 : ℝ) ∂μ from by simp]
-    apply tendsto_integral_of_L1 (fun _ => (0 : ℝ)) (integrable_zero _ _ _)
+    apply tendsto_integral_of_L1 (fun _ => (0 : ℝ)) (integrable_zero _ _ _).aestronglyMeasurable
     · filter_upwards [h_diff_int] with n hn; exact hn
     · simpa [sub_zero] using h_lintegral_tendsto
   by_cases hgψ_int : Integrable (fun x => g x * ψ x) μ
@@ -330,12 +330,13 @@ theorem sobolev_chain_rule_unitBall
         (fderiv ℝ φ x) (EuclideanSpace.single i 1))) := by
     have hΦ_lip : LipschitzWith ⟨M, hM_pos⟩ Φ :=
       lipschitzWith_of_nnnorm_deriv_le (hΦ.differentiable (by simp)) (fun t => by
-        simp only [← NNReal.coe_le_coe, NNReal.coe_mk, coe_nnnorm]
+        simp only [← NNReal.coe_le_coe, coe_nnnorm]
         exact (Real.norm_eq_abs _).symm ▸ hM t)
     have hΦ_ptwise : ∀ n x, ‖Φ (ψ (ns n) x) - Φ (u x)‖ ≤ M * ‖ψ (ns n) x - u x‖ := by
       intro n x
       have := hΦ_lip.dist_le_mul (ψ (ns n) x) (u x)
-      rwa [Real.dist_eq, Real.dist_eq, NNReal.coe_mk] at this
+      simp only [Real.dist_eq] at this
+      exact this
     set μ := volume.restrict (Metric.ball (0 : E) 1)
     have hΦψ_L2 : Tendsto (fun n => eLpNorm (fun x => Φ (ψ (ns n) x) - Φ (u x)) 2 μ)
         atTop (nhds 0) := by
@@ -344,7 +345,7 @@ theorem sobolev_chain_rule_unitBall
       apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
         (show Tendsto (fun n => ‖(M : ℝ)‖ₑ * eLpNorm (fun x => ψ (ns n) x - u x) 2 μ)
           atTop (nhds 0) from ?_)
-        (Eventually.of_forall (fun _ => zero_le))
+        (Eventually.of_forall (fun _ => zero_le ))
         (Eventually.of_forall (fun n => ?_))
       · rw [show (0 : ℝ≥0∞) = ‖(M : ℝ)‖ₑ * 0 from by simp]
         exact ENNReal.Tendsto.const_mul hψ_sub (Or.inr enorm_ne_top)
@@ -806,7 +807,7 @@ private theorem HasWeakPartialDeriv'_of_local
       = ∫ x in Ω, ∑ k ∈ S, f x * (fderiv ℝ (fun x => (ρ k : E → ℝ) x * φ x) x) (EuclideanSpace.single i 1) := by
         congr 1; ext x; exact hf_dφ_sum x
     _ = ∑ k ∈ S, ∫ x in Ω, f x * (fderiv ℝ (fun x => (ρ k : E → ℝ) x * φ x) x) (EuclideanSpace.single i 1) := by
-        rw [integral_finset_sum S (fun k _ => by
+        rw [integral_finsetSum S (fun k _ => by
           let ψk : E → ℝ := fun x => (ρ k : E → ℝ) x * φ x
           have hψk_cont : Continuous (fun x =>
               (fderiv ℝ ψk x) (EuclideanSpace.single i 1)) :=
@@ -822,7 +823,7 @@ private theorem HasWeakPartialDeriv'_of_local
         by rw [Finset.sum_neg_distrib]
     _ = -(∫ x in Ω, ∑ k ∈ S, g x * ((ρ k : E → ℝ) x * φ x)) := by
         congr 1
-        rw [integral_finset_sum S (fun k _ => by
+        rw [integral_finsetSum S (fun k _ => by
           let ψk : E → ℝ := fun x => (ρ k : E → ℝ) x * φ x
           simpa [ψk, smul_eq_mul] using
             hg_loc.integrable_smul_right_of_hasCompactSupport
@@ -887,11 +888,11 @@ theorem sobolev_chain_rule
   · -- Φ ∘ u is locally integrable on Ω
     have hu_loc : LocallyIntegrable u (volume.restrict Ω) :=
       hw.memLp.locallyIntegrable (by norm_num : (1 : ℝ≥0∞) ≤ 2)
-    have hMu_loc : LocallyIntegrable (fun x => M * u x) (volume.restrict Ω) := by
-      simpa [smul_eq_mul] using hu_loc.smul M
+    have hMu_loc : LocallyIntegrable (fun x => M * u x) (volume.restrict Ω) :=
+      hu_loc.smul M
     have hΦ_lip : LipschitzWith ⟨M, hM_pos⟩ Φ :=
       lipschitzWith_of_nnnorm_deriv_le (hΦ.differentiable (by simp)) (fun t => by
-        simp only [← NNReal.coe_le_coe, NNReal.coe_mk, coe_nnnorm]
+        simp only [← NNReal.coe_le_coe, coe_nnnorm]
         exact (Real.norm_eq_abs _).symm ▸ hM t)
     have hΦ_abs_le : ∀ t, |Φ t| ≤ M * |t| := by
       intro t
@@ -906,8 +907,8 @@ theorem sobolev_chain_rule
   · -- Φ'(u) · gi is locally integrable on Ω
     have hgi_loc : LocallyIntegrable gi (volume.restrict Ω) :=
       hgi_Lp.locallyIntegrable (by norm_num : (1 : ℝ≥0∞) ≤ 2)
-    have hMgi_loc : LocallyIntegrable (fun x => M * gi x) (volume.restrict Ω) := by
-      simpa [smul_eq_mul] using hgi_loc.smul M
+    have hMgi_loc : LocallyIntegrable (fun x => M * gi x) (volume.restrict Ω) :=
+      hgi_loc.smul M
     exact hMgi_loc.mono
       (((hΦ.continuous_deriv (by simp)).comp_aestronglyMeasurable
         hw.memLp.aestronglyMeasurable).mul hgi_Lp.aestronglyMeasurable)
