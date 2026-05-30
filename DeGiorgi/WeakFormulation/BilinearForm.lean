@@ -73,8 +73,9 @@ theorem aestronglyMeasurable_bilinFormIntegrandOfCoeff
     simpa using (RCLike.inner_apply' a b)
   refine hF_aemeas.aestronglyMeasurable.congr ?_
   filter_upwards with x
-  simp [bilinFormIntegrandOfCoeff, PiLp.inner_apply, matMulE_apply, Matrix.mulVec,
-    dotProduct, hscalar]
+  simp only [bilinFormIntegrandOfCoeff, PiLp.inner_apply, matMulE_apply, Matrix.mulVec, dotProduct]
+  ring_nf
+  simp [ mul_comm]
 
 /-- The bilinear-form integrand is integrable on `Ω`. -/
 theorem integrable_bilinFormIntegrandOfCoeff
@@ -369,7 +370,7 @@ theorem aestronglyMeasurable_divergenceRHSIntegrandOfField
     simpa using (RCLike.inner_apply' a b)
   refine hsum.aestronglyMeasurable.congr ?_
   filter_upwards with x
-  simp [divergenceRHSIntegrandOfField, PiLp.inner_apply, hscalar]
+  simp [divergenceRHSIntegrandOfField, PiLp.inner_apply, mul_comm]
 
 /-- The divergence-form RHS integrand is integrable on `Ω`. -/
 theorem integrable_divergenceRHSIntegrandOfField
