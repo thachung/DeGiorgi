@@ -224,10 +224,10 @@ private theorem exists_antideriv_of_zero_integral {a b : ℝ} (_hab : a < b)
     hη_cs.isCompact.exists_cthickening_subset_open isOpen_Ioo hη_supp
   have hη_supp_Icc : tsupport η ⊆ Icc (a + ε) (b - ε) := by
     intro x hx; have hx_Ioo := hη_supp hx; constructor
-    · by_contra h; push_neg at h
+    · by_contra h; push Not at h
       exact lt_irrefl a (hε_thick (Metric.mem_cthickening_of_dist_le a x ε _ hx
         (by rw [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hx_Ioo.1.le)]; linarith))).1
-    · by_contra h; push_neg at h
+    · by_contra h; push Not at h
       exact lt_irrefl b (hε_thick (Metric.mem_cthickening_of_dist_le b x ε _ hx
         (by rw [Real.dist_eq, abs_of_nonneg (sub_nonneg.mpr hx_Ioo.2.le)]; linarith))).2
   have hη_zero_lt : ∀ x, x < a + ε → η x = 0 := fun x hx => by
@@ -254,8 +254,8 @@ private theorem exists_antideriv_of_zero_integral {a b : ℝ} (_hab : a < b)
     simp
   have hφ_supp_Icc : Function.support φ ⊆ Icc (a + ε) (b - ε) := by
     intro x hx; constructor
-    · by_contra h; push_neg at h; exact Function.mem_support.mp hx (hφ_zero_lt x h)
-    · by_contra h; push_neg at h; exact Function.mem_support.mp hx (hφ_zero_gt x h)
+    · by_contra h; push Not at h; exact Function.mem_support.mp hx (hφ_zero_lt x h)
+    · by_contra h; push Not at h; exact Function.mem_support.mp hx (hφ_zero_gt x h)
   exact ⟨φ,
     contDiff_infty_iff_deriv.mpr ⟨hφ_diff, hderiv_eq ▸ hη⟩,
     IsCompact.of_isClosed_subset isCompact_Icc isClosed_closure
@@ -551,7 +551,7 @@ private theorem exists_smooth_trunc (ε : ℝ) (hε : 0 < ε) :
   refine ⟨Φ, hΦ_smooth, hΦ_zero, fun s => ?_, fun s => ?_, fun s hs => ?_, hderiv_vanish⟩
   · by_cases h : |s| ≤ ε
     · exact le_trans (hΦ_abs_le s) h
-    · push_neg at h; cases le_or_gt 0 s with
+    · push Not at h; cases le_or_gt 0 s with
       | inl hs => rw [hΦ_const_pos s (by linarith [abs_of_nonneg hs])]; exact le_trans (hΦ_abs_le ε) (by rw [abs_of_pos hε])
       | inr hs => rw [hΦ_const_neg s (by linarith [abs_of_neg hs])]; exact le_trans (hΦ_abs_le (-ε)) (by rw [abs_neg, abs_of_pos hε])
   · rw [hderiv_eq, abs_le]; exact ⟨by linarith [β.nonneg' s], β.le_one⟩

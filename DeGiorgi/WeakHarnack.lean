@@ -1551,7 +1551,7 @@ theorem weak_harnack_chain
           (essInf u (volume.restrict (ball (0 : E) (1 / 4 : ℝ)))) ^ p₀ := by
       exact mul_le_mul_of_nonneg_right hC_le hpow_nonneg
     exact le_trans hmain hfinal
-  · push_neg at hpq
+  · push Not at hpq
     let q' : ℝ := (p₀ + 1) / 2
     let q_star : ℝ := q * (d : ℝ) / ((d : ℝ) - 2)
     let q'_star : ℝ := q' * (d : ℝ) / ((d : ℝ) - 2)
