@@ -465,7 +465,7 @@ private noncomputable def comp_smooth_bounded_witness
   have hM_nonneg : 0 ≤ M := le_trans (abs_nonneg _) (hM 0)
   have hΦ_lip : LipschitzWith ⟨M, hM_nonneg⟩ Φ :=
     lipschitzWith_of_nnnorm_deriv_le (hΦ.differentiable (by simp)) (fun t => by
-      simp only [← NNReal.coe_le_coe, NNReal.coe_mk, coe_nnnorm]
+      simp only [← NNReal.coe_le_coe, coe_nnnorm]
       exact (Real.norm_eq_abs _).symm ▸ hM t)
   have hΦ_abs_le : ∀ t, |Φ t| ≤ M * |t| := by
     intro t; have ht := hΦ_lip.dist_le_mul t 0
