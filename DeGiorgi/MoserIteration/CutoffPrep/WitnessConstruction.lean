@@ -957,7 +957,7 @@ theorem moserPowerCutoff_memW1pWitness
           intro n
           exact (((hAsingSeq_memLp n i).aestronglyMeasurable.aemeasurable.pow_const 2).ennreal_ofReal)
         have hleft :=
-          MeasureTheory.lintegral_liminf_le' (μ := μ) hmeas
+          MeasureTheory.lintegral_liminf_le' (μ := μ) (u := (atTop : Filter ℕ)) hmeas
         have hlim :
             (fun x =>
               Filter.liminf (fun n => ENNReal.ofReal ((AsingSeq n i x) ^ 2)) atTop) =ᵐ[μ]
@@ -1368,7 +1368,7 @@ theorem moserPowerCutoff_memW1pWitness
           AEMeasurable (fun x => ‖(wfn n).weakGrad x‖ ^ 2) μ := by
         exact (wfn n).weakGrad_norm_memLp.aestronglyMeasurable.aemeasurable.pow_const 2
       exact hsq_meas.ennreal_ofReal
-    have hleft := MeasureTheory.lintegral_liminf_le' (μ := μ) hmeas
+    have hleft := MeasureTheory.lintegral_liminf_le' (μ := μ) (u := (atTop : Filter ℕ)) hmeas
     have hlim :
         (fun x =>
           Filter.liminf (fun n => ENNReal.ofReal (‖(wfn n).weakGrad x‖ ^ 2)) atTop) =ᵐ[μ]

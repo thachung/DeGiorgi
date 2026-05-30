@@ -10,7 +10,7 @@ cutoffs, culminating in the core inverse energy bound.
 
 noncomputable section
 
-open MeasureTheory Metric
+open MeasureTheory Metric Filter
 
 namespace DeGiorgi
 
@@ -1123,7 +1123,7 @@ theorem superPowerCutoff_memW1p_energy_of_supersolution_core
           ∀ n, AEMeasurable (fun x => ENNReal.ofReal ((AsingSeq n i x) ^ 2)) μ := by
         intro n
         exact (((hAsingSeq_memLp n i).aestronglyMeasurable.aemeasurable.pow_const 2).ennreal_ofReal)
-      have hleft := MeasureTheory.lintegral_liminf_le' (μ := μ) hmeas
+      have hleft := MeasureTheory.lintegral_liminf_le' (μ := μ) (u := (atTop : Filter ℕ)) hmeas
       have hlim :
           (fun x =>
             Filter.liminf (fun n => ENNReal.ofReal ((AsingSeq n i x) ^ 2)) Filter.atTop) =ᵐ[μ]
@@ -1372,7 +1372,7 @@ theorem superPowerCutoff_memW1p_energy_of_supersolution_core
           AEMeasurable (fun x => ‖(wfn n).weakGrad x‖ ^ 2) μ := by
         exact (wfn n).weakGrad_norm_memLp.aestronglyMeasurable.aemeasurable.pow_const 2
       exact hsq_meas.ennreal_ofReal
-    have hleft := MeasureTheory.lintegral_liminf_le' (μ := μ) hmeas
+    have hleft := MeasureTheory.lintegral_liminf_le' (μ := μ) (u := (atTop : Filter ℕ)) hmeas
     have hlim :
         (fun x =>
           Filter.liminf (fun n => ENNReal.ofReal (‖(wfn n).weakGrad x‖ ^ 2)) Filter.atTop) =ᵐ[μ]

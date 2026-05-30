@@ -517,7 +517,7 @@ theorem crossover_product_bound_exists :
         ∀ n, AEMeasurable (fun x => ENNReal.ofReal (g n x)) μ := by
       intro n
       exact (hg_meas n).aemeasurable.ennreal_ofReal
-    have hleft := MeasureTheory.lintegral_liminf_le' (μ := μ) hmeas
+    have hleft := MeasureTheory.lintegral_liminf_le' (μ := μ) (u := (atTop : Filter ℕ)) hmeas
     have hlim :
         (fun x => Filter.liminf (fun n => ENNReal.ofReal (g n x)) atTop) =ᵐ[μ]
           fun x => ENNReal.ofReal (g0 x) := by
