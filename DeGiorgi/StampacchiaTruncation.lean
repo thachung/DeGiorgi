@@ -104,7 +104,7 @@ theorem deriv_eq_zero_ae_on_zeroSet {f : ℝ → ℝ}
     ext x; simp only [mem_setOf_eq, Classical.not_imp, ne_eq]
   rw [heq]
   rw [ae_iff] at hf_diff
-  apply le_antisymm _ (zero_le _)
+  apply le_antisymm _ (zero_le)
   calc volume {x | f x = 0 ∧ deriv f x ≠ 0}
       ≤ volume ({x | f x = 0 ∧ deriv f x ≠ 0 ∧ HasDerivAt f (deriv f x) x} ∪
                 {x | ¬HasDerivAt f (deriv f x) x}) := by
