@@ -368,7 +368,7 @@ private theorem poincare_unitBall_W1p
       atTop (nhds 0) :=
     tendsto_of_tendsto_of_tendsto_of_le_of_le'
       tendsto_const_nhds hψ_fn
-      (Eventually.of_forall fun _ => zero_le _)
+      (Eventually.of_forall fun _ => zero_le)
       (Eventually.of_forall h_mean_le)
   -- === Triangle inequality for each n ===
   -- u - ⨍u = -(ψ_n-u) + (ψ_n-⨍ψ_n) + ⨍(ψ_n-u)

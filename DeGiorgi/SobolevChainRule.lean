@@ -133,7 +133,7 @@ private theorem integral_mul_tendsto_of_eLpNorm_tendsto
   have h_lintegral_tendsto : Tendsto (fun n => ∫⁻ x, ‖(f n x - g x) * ψ x‖ₑ ∂μ)
       atTop (nhds 0) := by
     apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds _
-      (Eventually.of_forall (fun _ => zero_le _)) (Eventually.of_forall h_bound2)
+      (Eventually.of_forall (fun _ => zero_le)) (Eventually.of_forall h_bound2)
     rw [show (0 : ℝ≥0∞) = K * 0 from by simp]
     exact ENNReal.Tendsto.const_mul h_conv (Or.inr hK_ne_top)
   have h_diff_int : ∀ᶠ n in atTop,
@@ -256,7 +256,7 @@ private theorem eLpNorm_one_tendsto_of_eLpNorm_two_tendsto
     apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
       (show Tendsto (fun n => eLpNorm (fun x => f n x - g x) 2 μ * K)
         atTop (nhds 0) from ?_)
-      (Eventually.of_forall (fun _ => zero_le _))
+      (Eventually.of_forall (fun _ => zero_le))
       (Eventually.of_forall h_L1_le_L2)
     rw [show (0 : ℝ≥0∞) = 0 * K from by simp]
     exact ENNReal.Tendsto.mul_const h (Or.inr (by
@@ -344,7 +344,7 @@ theorem sobolev_chain_rule_unitBall
       apply tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds
         (show Tendsto (fun n => ‖(M : ℝ)‖ₑ * eLpNorm (fun x => ψ (ns n) x - u x) 2 μ)
           atTop (nhds 0) from ?_)
-        (Eventually.of_forall (fun _ => zero_le _))
+        (Eventually.of_forall (fun _ => zero_le))
         (Eventually.of_forall (fun n => ?_))
       · rw [show (0 : ℝ≥0∞) = ‖(M : ℝ)‖ₑ * 0 from by simp]
         exact ENNReal.Tendsto.const_mul hψ_sub (Or.inr enorm_ne_top)

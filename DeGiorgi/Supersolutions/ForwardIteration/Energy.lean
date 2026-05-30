@@ -1315,7 +1315,7 @@ theorem superPowerCutoffFwd_memW1p_energy_of_supersolution_core
         Filter.Tendsto rhs Filter.atTop (nhds 0) := by
       simpa [rhs] using (hAsing_tendsto i).add (hBn_tendsto i)
     exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hsum_tendsto
-      (fun _ => zero_le _) hbound
+      (fun _ => zero_le) hbound
   have hWeakComp :
       ∀ i : Fin d, HasWeakPartialDeriv i (gComp i) f Ω := by
     intro i

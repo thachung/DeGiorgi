@@ -1395,7 +1395,7 @@ theorem exists_smooth_W1p_approx_of_supportedWitness
     have hψ_fun_nonneg :
         ∀ n,
           (0 : ℝ≥0∞) ≤ eLpNorm (fun x => ψ n x - u x) (ENNReal.ofReal p) (volume.restrict Ω) :=
-      fun n => zero_le _
+      fun n => zero_le
     have hψ_fun_bound :
         ∀ n,
           eLpNorm (fun x => ψ n x - u x) (ENNReal.ofReal p) (volume.restrict Ω) ≤
@@ -1419,7 +1419,7 @@ theorem exists_smooth_W1p_approx_of_supportedWitness
             eLpNorm
               (fun x => (fderiv ℝ (ψ n) x) (EuclideanSpace.single i 1) - hw.weakGrad x i)
               (ENNReal.ofReal p) (volume.restrict Ω) :=
-      fun n => zero_le _
+      fun n => zero_le
     have hψ_grad_bound :
         ∀ n,
           eLpNorm

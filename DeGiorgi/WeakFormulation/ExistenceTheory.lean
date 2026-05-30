@@ -397,7 +397,7 @@ theorem weakProblem_exists
             (PiLp.norm_apply_le ((smoothTestWitness hΩ (hψ n)).weakGrad x - Gsol x) i)
     exact
       tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hgrad_vec_tendsto
-        (fun n => zero_le _) hupper
+        (fun n => zero_le) hupper
   have hu_memLp' : MemLp u (ENNReal.ofReal 2) (volume.restrict Ω) := by
     simpa using hu_memLp
   have hgsol_comp_memLp' :
