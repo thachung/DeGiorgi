@@ -372,7 +372,7 @@ theorem MemW01p.add
               eLpNorm (fun x => φv n x - v x) 2 (volume.restrict Ω))
           atTop (nhds (0 + 0)) :=
       hφu_fun.add hφv_fun
-    refine tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds ?_ (fun n => zero_le _) hupper
+    refine tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds ?_ (fun n => zero_le) hupper
     simpa using hsum
   · intro i
     have hupper :
@@ -436,7 +436,7 @@ theorem MemW01p.add
                 2 (volume.restrict Ω))
           atTop (nhds (0 + 0)) :=
       (hφu_grad i).add (hφv_grad i)
-    refine tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds ?_ (fun n => zero_le _) hupper
+    refine tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds ?_ (fun n => zero_le) hupper
     simpa using hsum
 
 /-- `H₀¹(Ω)` is closed under scalar multiplication. -/

@@ -429,7 +429,7 @@ theorem exists_pi_limit_of_cauchy_eLpNorm
     have hsum : Tendsto (fun n => ∑ i : Fin d,
         eLpNorm (fun x => G n x i - g_i i x) p μ) atTop (nhds 0) := by
       have h0 : (0 : ℝ≥0∞) = ∑ _i : Fin d, (0 : ℝ≥0∞) := by simp
-      rw [h0]; exact tendsto_finset_sum Finset.univ (fun i _ => hg_i_tendsto i)
+      rw [h0]; exact tendsto_finsetSum Finset.univ (fun i _ => hg_i_tendsto i)
     exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hsum
       (fun _ => bot_le) hle
   have hGext_aesm : AEStronglyMeasurable Gext μ :=

@@ -193,7 +193,7 @@ private theorem partialDiff_sum_tendsto_zero
     intro i
     simpa using hφ_grad i
   simpa using
-    ((continuous_finset_sum Finset.univ fun i _ => continuous_apply i).tendsto
+    ((continuous_finsetSum Finset.univ fun i _ => continuous_apply i).tendsto
       (0 : Fin d → ℝ≥0∞)).comp hpi
 
 omit [NeZero d] in
@@ -343,7 +343,7 @@ theorem sobolev_of_approx {p : ℝ} (hp : 1 ≤ p) (hpd : p < (d : ℝ))
         gradVec_eLpNorm_le_sum (p := p) (φ := φ) (G := G) hp hφ_smooth hG_comp_aesm n
     have hZeroLE :
         ∀ᶠ n in atTop, (0 : ℝ≥0∞) ≤ eLpNorm (fun x => gradVec n x - G x) p_enn volume :=
-      Eventually.of_forall fun n => zero_le _
+      Eventually.of_forall fun n => zero_le
     exact tendsto_of_tendsto_of_tendsto_of_le_of_le'
       (show Tendsto (fun _ : ℕ => (0 : ℝ≥0∞)) atTop (nhds 0) from tendsto_const_nhds)
       hNormCompTendsto
