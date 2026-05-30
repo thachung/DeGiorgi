@@ -60,11 +60,10 @@ private lemma smoothTransition_nnnorm_deriv_bounded :
     · by_cases hx1 : 1 < x
       · rw [st_deriv_zero_gt hx1, norm_zero]
         exact norm_nonneg _
-      · push_neg at hx0 hx1
+      · push Not at hx0 hx1
         exact Filter.eventually_principal.mp hM_max x (Set.mem_Icc.2 ⟨hx0, hx1⟩)
   refine ⟨⟨‖deriv smoothTransition M‖, norm_nonneg _⟩, fun x => ?_⟩
-  rw [← NNReal.coe_le_coe, NNReal.coe_mk, coe_nnnorm]
-  exact hbound x
+  exact (NNReal.coe_le_coe.mpr (hbound x))
 
 /-- Universal derivative bound for smooth cutoff profiles. -/
 noncomputable def Mst : ℝ≥0 := smoothTransition_nnnorm_deriv_bounded.choose
@@ -160,7 +159,7 @@ private lemma radial_lipschitz (x₀ : E) {r R : ℝ} (hrR : r < R) :
     LipschitzWith ⟨(R - r)⁻¹, inv_nonneg.mpr (sub_pos.2 hrR).le⟩
       (fun x : E => (R - ‖x - x₀‖) / (R - r)) :=
   LipschitzWith.of_dist_le_mul fun x y => by
-    simp only [NNReal.coe_mk, dist_eq_norm, Real.norm_eq_abs]
+    simp only [ dist_eq_norm, Real.norm_eq_abs]
     have hpos : (0 : ℝ) < R - r := sub_pos.2 hrR
     have key : abs (‖y - x₀‖ - ‖x - x₀‖) ≤ ‖x - y‖ := calc
       abs (‖y - x₀‖ - ‖x - x₀‖) ≤ ‖(y - x₀) - (x - x₀)‖ := by
@@ -169,7 +168,9 @@ private lemma radial_lipschitz (x₀ : E) {r R : ℝ} (hrR : r < R) :
       _ = ‖x - y‖ := by exact norm_sub_rev y x
     have hsub : (R - ‖x - x₀‖) / (R - r) - (R - ‖y - x₀‖) / (R - r) =
         (‖y - x₀‖ - ‖x - x₀‖) / (R - r) := by ring
-    rw [hsub, abs_div, abs_of_pos hpos, inv_mul_eq_div]
+    rw [hsub, abs_div, abs_of_pos hpos]
+    change |‖y - x₀‖ - ‖x - x₀‖| / (R - r) ≤ (R - r)⁻¹ * ‖x - y‖
+    rw [inv_mul_eq_div]
     exact div_le_div_of_nonneg_right key hpos.le
 
 omit [NeZero d] in
@@ -184,7 +185,7 @@ lemma myCutoff_fderiv_bound (x₀ : E) {r R : ℝ} (hrR : r < R) (x : E) :
   have h : ‖fderiv ℝ (myCutoff x₀ r R) x‖ ≤
       ↑(Mst * ⟨(R - r)⁻¹, inv_nonneg.mpr (sub_nonneg.mpr hrR.le)⟩) :=
     norm_fderiv_le_of_lipschitz (𝕜 := ℝ) (x₀ := x) (myCutoff_lipschitz x₀ hrR)
-  rwa [NNReal.coe_mul, NNReal.coe_mk] at h
+  simpa [NNReal.coe_mul, NNReal.coe_mk] using h
 
 structure Cutoff (x₀ : E) (r R : ℝ) where
   toFun : E → ℝ
