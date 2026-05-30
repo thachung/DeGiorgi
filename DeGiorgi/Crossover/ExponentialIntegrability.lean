@@ -1915,7 +1915,7 @@ theorem regularizedLog_halfBall_exp_average_to_origin_le
           ≤ ∫ x, G x ∂μ := hint_le_sum
       _ = Finset.sum t (fun c => ∫ x, Set.indicator (Metric.ball c (1 / 48 : ℝ)) F x ∂μ) := by
             dsimp [G]
-            rw [integrable_finsetSum]
+            rw [integral_finsetSum]
             intro c hc
             exact hterm_int c hc
       _ ≤ Finset.sum t (fun c => ∫ x in Metric.ball c (1 / 48 : ℝ), F x ∂volume) := by
