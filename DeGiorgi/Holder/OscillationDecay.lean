@@ -197,11 +197,18 @@ theorem holderOnWith_of_realBound
         rw [edist_dist, Real.dist_eq]
       _ ≤ ENNReal.ofReal (K * ‖x - y‖ ^ α) := hxy'
       _ = ENNReal.ofReal K * ENNReal.ofReal (‖x - y‖ ^ α) := by
-            rw [ENNReal.ofReal_mul hK]
+        rw [ENNReal.ofReal_mul hK]
       _ = ENNReal.ofReal K * edist x y ^ α := by
-            rw [edist_dist, dist_eq_norm, ENNReal.ofReal_rpow_of_nonneg (norm_nonneg _) hα]
-  convert hmain using 1
-  rw [(ENNReal.ofReal_eq_coe_nnreal (x := K) hK).symm, NNReal.coe_mk]
+        rw [edist_dist, dist_eq_norm]
+        exact congrArg (ENNReal.ofReal K * ·) (ENNReal.ofReal_rpow_of_nonneg (norm_nonneg _) hα).symm
+  have hmain' :
+      edist (v x) (v y) ≤ ((NNReal.mk K hK : NNReal) : ENNReal) * edist x y ^ α := by
+    simpa [ENNReal.ofReal_eq_coe_nnreal (x := K) hK] using hmain
+  have hmain'' :
+      edist (v x) (v y) ≤
+        ((NNReal.mk K hK : NNReal) : ENNReal) * edist x y ^ (NNReal.mk α hα : ℝ) := by
+    simpa [NNReal.coe_mk] using hmain'
+  simpa using hmain''
 
 omit [NeZero d] in
 theorem pointwise_le_of_ae_le_on_ball_inter_half
