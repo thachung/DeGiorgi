@@ -316,7 +316,7 @@ private theorem poincare_unitBall_W1p
         pp μ)
       atTop (nhds 0) := by
     rw [show (0 : ℝ≥0∞) = ∑ _ : Fin d, (0 : ℝ≥0∞) from by simp]
-    exact tendsto_finset_sum _ fun i _ => hψ_grad i
+    exact tendsto_finsetSum _ fun i _ => hψ_grad i
   -- === eLpNorm(‖fderiv ψ_n‖) ≤ eLpNorm(‖G‖) + grad_err ===
   have hG_norm_aesm : AEStronglyMeasurable (fun x => ‖hw.weakGrad x‖) μ := by
     -- Follow the pattern from aestronglyMeasurable_euclidean_of_components_local

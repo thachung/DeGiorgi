@@ -422,7 +422,7 @@ theorem exists_smooth_global_approx_of_unitBallExtension
             atTop (nhds 0) := by
           have h0 : (0 : ℝ≥0∞) = ∑ _j : Fin d, (0 : ℝ≥0∞) := by simp
           rw [h0]
-          exact tendsto_finset_sum Finset.univ (fun j _ => by
+          exact tendsto_finsetSum Finset.univ (fun j _ => by
             simpa [H, PiLp.toLp_apply] using hcomp_pair j)
         exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hsum
           (fun _ => bot_le) hle
@@ -519,7 +519,7 @@ theorem exists_smooth_global_approx_of_unitBallExtension
             atTop (nhds 0) := by
           have h0 : (0 : ℝ≥0∞) = ∑ _i : Fin d, (0 : ℝ≥0∞) := by simp
           rw [h0]
-          exact tendsto_finset_sum Finset.univ (fun i _ => hG_comp_tendsto i)
+          exact tendsto_finsetSum Finset.univ (fun i _ => hG_comp_tendsto i)
         exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hsum
           (fun _ => bot_le) hle
       have hGnorm_tendsto :
@@ -747,7 +747,7 @@ theorem exists_smooth_global_approx_of_unitBallExtension
               atTop (nhds 0) := by
             have h0 : (0 : ℝ≥0∞) = ∑ _i : Fin d, (0 : ℝ≥0∞) := by simp
             rw [h0]
-            exact tendsto_finset_sum Finset.univ (fun i _ => by
+            exact tendsto_finsetSum Finset.univ (fun i _ => by
               simpa [gradVec, PiLp.toLp_apply] using hψ_grad i)
           exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hsum
             (fun _ => bot_le) hle
